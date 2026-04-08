@@ -51,7 +51,12 @@ end
 -- ----------------------------------------------------------------------
 
 function Compat:GetMoneyLogTab()
-    return (MAX_GUILD_BANK_TABS or 6) + 1
+    -- IMPORTANT: the constant is MAX_GUILDBANK_TABS (no underscore between
+    -- GUILD and BANK). MAX_GUILD_BANK_TABS does not exist and will always
+    -- be nil. The current value as of patch 12.x retail is 8, so the money
+    -- log lives at tab 9. Fall back to 9 (not 7) when the constant is
+    -- missing.
+    return (MAX_GUILDBANK_TABS or 8) + 1
 end
 
 function Compat:QueryGuildBankLog(tab)

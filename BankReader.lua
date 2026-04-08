@@ -94,9 +94,10 @@ function BankReader:RequestLog()
         return
     end
     local atBank = C:IsAtGuildBank()
-    local ok = C:QueryGuildBankLog()
-    TTSGCM:Print(string.format("|cff66ccffQueryGuildBankLog called (sent=%s, atBank=%s)|r",
-        tostring(ok), tostring(atBank)))
+    local tab = C:GetMoneyLogTab()
+    local ok = C:QueryGuildBankLog(tab)
+    TTSGCM:Print(string.format("|cff66ccffQueryGuildBankLog(tab=%d) called (sent=%s, atBank=%s)|r",
+        tab, tostring(ok), tostring(atBank)))
     if not atBank then
         TTSGCM:Print("|cffaaaaaa(scanning works best when the guild bank UI is open. Walk to the bank NPC.)|r")
     end
