@@ -7,7 +7,9 @@
 #     for WoW to recognise the addon)
 #   - Strip ignored files (.git, .github, README.md, etc.)
 #   - Upload the built zip as a GitHub release asset for that tag
-#   - Upload to CurseForge if CF_API_KEY is set as a repo secret
+#
+# CurseForge publishing is handled automatically by CurseForge's own
+# packager, which watches this repo and packages any new tagged commits.
 #
 # Manual trigger is also enabled (workflow_dispatch) so you can run it
 # from the Actions tab against any branch/tag without having to push a
@@ -32,18 +34,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Debug secret presence
-        run: |
-          if [ -n "$CF_API_KEY" ]; then
-            echo "CF_API_KEY is set (length: ${#CF_API_KEY})"
-          else
-            echo "CF_API_KEY is EMPTY or not passed"
-          fi
-        env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-
       - name: Build and release
         uses: BigWigsMods/packager@v2
         env:
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
